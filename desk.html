@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Desk</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Desk</title>
+	<style>
+        table {
+            border-collapse: collapse;
+        }
+        tr {
+        }
+        td {
+            border: 2px solid #000000;
+			width: 20px;
+            height: 20px;
+         }
+	</style>	
+</head>
+<body>
+<div id="myDesk">
+</div>
+<script>
+	'use strict';
+  
+	function createDesk(size,parentEl){
+		const cols = ['','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+  		const myTable = document.createElement('table');
+		for (var rowNum = 0; rowNum<=size; rowNum++){
+      	let myTr = document.createElement('tr');
+        for (var colNum = 0; colNum<=size; colNum++){
+          let myTd = document.createElement('td');
+          myTd.style.background = '#FFFFFF';
+          if (rowNum == 0 || colNum == 0){
+          	myTd.style.border = '1px solid #FFFFFF';
+            if (rowNum == 0) myTd.textContent = cols[colNum];
+            if (colNum == 0 && rowNum > 0) myTd.textContent = rowNum;
+          }
+          if (colNum > 0 && rowNum > 0){
+          	if ((colNum+rowNum)%2 == 0) myTd.style.background = '#000000';
+          }
+          myTr.appendChild(myTd);
+        }
+        myTable.appendChild(myTr);
+      }
+    parentEl.appendChild(myTable);  
+  }  
+  const parEl = document.getElementById('myDesk');
+  createDesk(10,parEl);
+</script>
+</body>
+</html>
