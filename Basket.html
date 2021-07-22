@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Basket</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Basket</title>
+	<style>
+        table {
+            border-collapse: collapse;
+        }
+        tr {
+
+        }
+        td {
+            border: 2px solid #000000;
+        }
+	</style>	
+</head>
+<body>
+<div id="myBasket">
+</div>
+<script>
+	'use strict';
+	// Корзина (массив) будет состоять из объектов (Товар):
+	//[
+	//  {art:1, name:'Болт 10х30', count:100, price:0.35},
+	//  {art:2, name:'Гайка для болта 10х30', count:100, price:0.54},
+	//  {art:3, name:'Саморез по дереву 50', count:35, price:0.14},
+	//  {art:4, name:'Шуруповерт', count:1, price:5740.37},
+	//  {art:5, name:'Набор бит', count:3, price:354.25}
+	//]
+	class Product {
+		constructor(){
+			this.art = null,
+			this.name = '',
+			this.count = null,
+			this.price = null
+		}
+  
+		setArt(articul){
+			this.art = articul;
+		}
+  
+		setName(nameProd){
+			this.name = nameProd;
+		}
+  
+		setCount(countProd){
+			this.count = countProd;
+		}
+  
+		setPrice(priceProd){
+			this.price = priceProd;
+		}
+  
+  
+		getArt(){
+			return this.art;
+		}
+  
+		getName(){
+			return this.name;
+		}
+  
+		getCount(){
+			return this.count;
+		}
+  
+		getPrice(){
+			return this.price;
+		}
+  
+		getPriceProd(){
+			return this.price*this.count;
+		}
+	}
+
+	function countBasketPrice(myBasket){
+		let basketPrice = 0;
+		if (myBasket.length == 0) return 'Корзина пуста';
+		else {
+			for (let i=0; i<myBasket.length; i++) basketPrice += myBasket[i].getPriceProd();
+			return `В корзине ${myBasket.length} товаров, на ${basketPrice.toFixed(2)} рублей`;
+		}
+	}
+
+	const Product1 = new Product();
+	Product1.setArt(1);
+	Product1.setName('Болт 10х30');
+	Product1.setCount(100);
+	Product1.setPrice(0.35);
+	const Product2 = new Product();
+	Product2.setArt(2);
+	Product2.setName('Гайка для болта 10х30');
+	Product2.setCount(100);
+	Product2.setPrice(0.54);
+	const Product3 = new Product();
+	Product3.setArt(3);
+	Product3.setName('Саморез по дереву 50');
+	Product3.setCount(35);
+	Product3.setPrice(0.14);
+	const Product4 = new Product();
+	Product4.setArt(4);
+	Product4.setName('Шуруповерт');
+	Product4.setCount(1);
+	Product4.setPrice(5740.37);
+	const Product5 = new Product();
+	Product5.setArt(5);
+	Product5.setName('Набор бит');
+	Product5.setCount(3);
+	Product5.setPrice(354.25);
+	let Basket = [];
+	Basket.push(Product1);
+	Basket.push(Product2);
+	Basket.push(Product3);
+	Basket.push(Product4);
+	Basket.push(Product5);
+	function renderBasket(Bask, parentEl){
+		const cols = ['','Артикул','Наименование','Количество','Цена'];
+  		const myTable = document.createElement('table');
+		for (var rowNum = 0; rowNum<=Bask.length; rowNum++){
+      	let myTr = document.createElement('tr');
+        for (var colNum = 0; colNum<cols.length; colNum++){
+          let myTd = document.createElement('td');
+          myTd.style.background = '#FFFFFF';
+          if (rowNum == 0 || colNum == 0){
+            if (rowNum == 0) myTd.textContent = cols[colNum];
+            if (colNum == 0 && rowNum > 0) myTd.textContent = rowNum;
+          }
+          if (colNum > 0 && rowNum > 0){
+          	switch(colNum){
+				case 1:
+					myTd.textContent = Bask[rowNum-1].getArt();
+					break;
+				case 2:
+					myTd.textContent = Bask[rowNum-1].getName();
+					break;
+				case 3:
+					myTd.textContent = Bask[rowNum-1].getCount();
+					break;
+				case 4:
+					myTd.textContent = Bask[rowNum-1].getPrice();
+					break;
+				default:
+					break;
+			}	
+          }
+          myTr.appendChild(myTd);
+        }
+        myTable.appendChild(myTr);
+      }
+    parentEl.appendChild(myTable);  
+	const baskPrice = document.createElement('p');
+	baskPrice.textContent = countBasketPrice(Bask);
+	parentEl.appendChild(baskPrice);  
+  }
+  const parEl = document.getElementById('myBasket');
+  renderBasket(Basket,parEl);
+</script>
+</body>
+</html>
