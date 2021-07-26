@@ -87,7 +87,10 @@ const catalog = {
 	onClickButtonHandler(event){
 		if (event.target.tagName !== 'BUTTON') return;
 		for (let i=0;i<this.catalogValues.length;i++){
-			if (this.catalogValues[i].count>0) this.basketValues.push(this.catalogValues[i]);
+			if (this.catalogValues[i].count > 0) {
+				console.log(this.catalogValues[i].count);
+				this.basketValues.push(this.catalogValues[i]);
+			}	
 		}
 		this.renderBasket()
 	},
@@ -96,6 +99,7 @@ const catalog = {
 		if (document.getElementById('basketPrice')) document.getElementById('basketPrice').remove();
 		if (this.basketValues.length>0){
 			const basketTable = document.createElement('table');
+			basketTable.id = 'basketTable';
 			for (let row = 0; row <= this.basketValues.length; row++) {
 				const tr = document.createElement('tr');
 			          
@@ -112,20 +116,20 @@ const catalog = {
 						switch(col){
 							case 1:
 								const img = document.createElement('img');
-								img.src = this.pathSmall + this.catalogValues[row-1].art.toString() + '.jpg';
+								img.src = this.pathSmall + this.basketValues[row-1].art.toString() + '.jpg';
 								td.appendChild(img);
 								break;
 							case 2:
-								td.textContent = this.catalogValues[row-1].art.toString();
+								td.textContent = this.basketValues[row-1].art.toString();
 								break;
 							case 3:
-								td.textContent = this.catalogValues[row-1].name.toString();
+								td.textContent = this.basketValues[row-1].name.toString();
 								break;
 							case 4:
-								td.textContent = this.catalogValues[row-1].price.toString();
+								td.textContent = this.basketValues[row-1].price.toString();
 								break;
 							case 5:
-								td.textContent = this.catalogValues[row-1].count.toString();
+								td.textContent = this.basketValues[row-1].count.toString();
 								break;
 							default:
 								break;
